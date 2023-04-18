@@ -1,0 +1,26 @@
+# Use root/root credentials
+
+services:
+  apache:
+    image: php:8.2-apache
+    volumes:
+      - ./public:/var/www/html
+      - ./apache2:/etc/apache2
+    ports:
+      - "80:80"
+
+  composer:
+    image: composer
+    volumes:
+      - ./public:/app
+    command: composer install
+
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: askZ4hI40J99uOw2&*vEfI6b
+      MYSQL_DATABASE: brand
+      MYSQL_USER: brand
+      MYSQL_PASSWORD: RpipYboYanEY
+    volumes:
+      - ./database:/var/lib/mysql
