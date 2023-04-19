@@ -4,16 +4,26 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 
-	<title>{ifset title}{include title|stripHtml} | {/ifset}Nette Web</title>
+	<title>{ifset title}{include title|stripHtml} | {/ifset}Značky</title>
 </head>
 
 <body>
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
-
-	{include content}
+	{snippetArea wrapper}
+		{include content}
+	{/snippetArea}
 
 	{block scripts}
 	<script src="https://nette.github.io/resources/js/3/netteForms.min.js"></script>
+	<script src="https://unpkg.com/naja@2/dist/Naja.min.js"></script>
+		<script
+				src="https://code.jquery.com/jquery-3.6.4.min.js"
+				integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+				crossorigin="anonymous"></script>
+		<script>
+			naja.initialize();
+		</script>
+
 	{/block}
 </body>
 </html>
