@@ -35,4 +35,21 @@ class Brand
             'SELECT count(*) FROM brands'
         );
     }
+
+    public function save(array $data ): int
+    {
+        if(IsSet($data['id']) && $data['id'])
+        {
+            $this->connection->query('UPDATE brands SET ? WHERE id = ?',$data,$data['id']);
+            return $data['id'];
+        }
+        unset($data['id']);
+        $this->connection->query('INSERT INTO brands ?',$data);
+        return $this->connection->getInsertId();
+    }
+
+    public function delete(int $id): void
+    {
+        $this->connection->query('DELETE FROM brands WHERE id = ?',$id);
+    }
 }

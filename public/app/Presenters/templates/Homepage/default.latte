@@ -9,6 +9,8 @@
 
 	<h2>Značky</h2>
 	<a href="{link edit}" class="ajax">Nová</a>
+
+	{snippet table}
 	<table>
 		<thead>
 			<tr>
@@ -21,13 +23,28 @@
 			<tr>
 				<td>{$brand->name}</td>
 				<td>
-					<a href="{link delete}">Smazat</a>
-					<a href="{link edit}">Editovat</a>
+					<a href="{link delete $brand->id}" class="ajax">Smazat</a>
+					<a href="{link edit $brand->id}" class="ajax">Editovat</a>
 				</td>
 			</tr>
 		{/foreach}
 		</tbody>
 	</table>
+		<p>Stránka
+			{for $i = $paginator->getFirstPage();  $i<= $paginator->getLastPage() ; $i ++ }
+			    <span>
+					<a href="{link default page: $i}" class="ajax">{if $i===$paginator->getPage()}<b>{/if}{$i}{if $i===$paginator->getPage()}</b>{/if}</a>
+				</span>
+			{/for}
+		</p>
+		<p>Záznamů na stránku
+			{for $j = 10; $j < 31; $j+=10 }
+				<span>
+					<a href="{link default items: $j}" class="ajax">{$j}</a>
+				</span>
+			{/for}
+		</p>
+	{/snippet}
 
 	{snippet modal}
 
