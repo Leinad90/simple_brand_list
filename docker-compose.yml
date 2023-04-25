@@ -3,23 +3,31 @@
 services:
   apache:
     build: ./apache2_image
-    image: php:8.2-apache
     volumes:
       - ./public:/var/www/html
       - ./apache2_conf:/etc/apache2
     ports:
       - "80:80"
     depends_on:
+      - sass
       - db
       - composer
+
+  sass:
+    image: apluslms/develop-sass
+    working_dir: /app
+    volumes:
+      - ./public:/app
+    depends_on:
       - node
+    command: sass css/default.scss www/style.css --watch
 
   node:
     image: node
     working_dir: /app
     volumes:
       - ./public:/app
-    command: npm install
+    command: npm install materialize-css
 
   composer:
     image: composer

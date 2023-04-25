@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Presenters;
 
 use app\Model\Brand;
+use app\Model\OrderBy;
 use Nette;
 use Nette\Application\Attributes\Persistent;
 
@@ -18,6 +19,9 @@ final class HomepagePresenter extends Nette\Application\UI\Presenter
     #[Persistent]
     public int $items=10;
 
+    #[Persistent]
+    public string $orderBy='ASC';
+
     public function __construct(
         private readonly Brand $brand
     )
@@ -25,29 +29,29 @@ final class HomepagePresenter extends Nette\Application\UI\Presenter
         parent::__construct();
     }
 
-    public function renderDefault(int $page=null, int $items=null)
+    public function renderDefault() : void
     {
-        $this->page = $page??$this->page;
-        $this->items = $items??$this->items;
+        $orderByObj = OrderBy::tryFrom($this->orderBy)??OrderBy::ASC;
         $count = $this->brand->getCount();
-        $paginator = new Nette\Utils\Paginator;
+        $paginator = new Nette\Utils\Paginator();
         $paginator->setItemCount($count);
         $paginator->setItemsPerPage($this->items);
         $paginator->setPage($this->page);
 
-        $brands = $this->brand->getPage($paginator->getOffset(), $paginator->getLength());
+        $brands = $this->brand->getPage($paginator->getOffset(), $paginator->getLength(),$orderByObj);
 
         $this->template->brands = $brands;
         $this->template->paginator = $paginator;
+        $this->template->orderBy = $this->orderBy;
         if($this->isAjax()) {
-            $this->redrawControl('table');
+            $this->redrawControl();
         }
     }
 
     public function save(Nette\Application\UI\Form $form, array $data): never
     {
         $this->brand->save($data);
-        $this->flashMessage('Uloženo');
+        $this->flashMessage('Uloženo '.$data['name']);
         $this->redirect('default');
     }
 
@@ -55,7 +59,7 @@ final class HomepagePresenter extends Nette\Application\UI\Presenter
     {
         if($id)
         {
-            $data = $this->brand->getById($id);
+            $this->template->data = $data = $this->brand->getById($id);
             $this['form']->setDefaults($data);
         }
         $this->redrawControl('modal');
@@ -63,8 +67,9 @@ final class HomepagePresenter extends Nette\Application\UI\Presenter
 
     public function actionDelete(int $id): never
     {
+        $data = $this->brand->getById($id);
         $this->brand->delete($id);
-        $this->flashMessage('Smazáno');
+        $this->flashMessage('Smazáno '.$data?->name);
         $this->redirect('default');
     }
 

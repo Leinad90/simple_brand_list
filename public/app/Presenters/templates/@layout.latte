@@ -3,12 +3,26 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="/style.css">
 
 	<title>{ifset title}{include title|stripHtml} | {/ifset}Značky</title>
 </head>
 
 <body>
+{dump}
+<div class="white-text blue">
+<div class="container">
+		<h1>{block heading}Nadpis{/block}</h1>
+</div>
+</div>
+
+<div id="content" class="container">
+
+	{snippet flases}
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+	{/snippet}
+
+
 	{snippetArea wrapper}
 		{include content}
 	{/snippetArea}
@@ -25,5 +39,6 @@
 		</script>
 
 	{/block}
+</div>
 </body>
 </html>

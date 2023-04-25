@@ -12,10 +12,10 @@ class Brand
         protected readonly Connection $connection
     ) {
     }
-    public function getPage(int $offset, int $limit): array
+    public function getPage(int $offset, int $limit, OrderBy $by): array
     {
         return $this->connection->fetchAll(
-            'SELECT * FROM brands ORDER BY name LIMIT ?,?',
+            'SELECT * FROM brands ORDER BY name '.$by->name.' LIMIT ?,?',
             $offset,
             $limit
         );

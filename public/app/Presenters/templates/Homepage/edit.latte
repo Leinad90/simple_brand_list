@@ -1,4 +1,16 @@
 {snippet modal}
-    {control form}
-    Nasrat
+    <div style="position: fixed; top: 0; z-index: 1; height: 100%" class="container light-green darken-3">
+    <div>
+        <h2>{ifset $data}Editace značky {$data['name']}{else}Nová znača{/ifset}
+        <a class="btn ajax red right" href="{plink default}">&#10005;</a>
+        </h2>
+
+    </div>
+        <div>
+        {control form}
+        </div>
+    </div>
 {/snippet}
+<script>
+
+</script>

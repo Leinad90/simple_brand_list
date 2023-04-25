@@ -1,28 +1,34 @@
 {* This is the welcome page, you can delete it *}
+{block heading}
+	Značky
+{/block}
 
 {block content}
-<div id="banner">
-	<h1 n:block=title>Congratulations!</h1>
-</div>
 
-<div id="content">
-
-	<h2>Značky</h2>
-	<a href="{link edit}" class="ajax">Nová</a>
-
+	<div class="section">
+		<p>
+		<a href="{link edit}" class="ajax btn btn-large">+ Přidat značku</a>
+		</p>
 	{snippet table}
-	<table>
-		<thead>
+	<table class="highlight striped">
+		<thead class="blue">
 			<tr>
-				<th>Název</th>
-				<th>Akce</th>
+				<th>
+					Název
+					{if $orderBy == 'ASC'}
+						<a href="{link default orderBy: 'DESC'}" class="ajax ">&uarr;</a>
+					{else}
+						<a href="{link default orderBy: 'ASC'}" class="ajax  ">&darr;</a>
+					{/if}
+				</th>
+				<th class="right-align">Akce</th>
 			</tr>
 		</thead>
 		<tbody>
 		{foreach $brands as $brand}
 			<tr>
 				<td>{$brand->name}</td>
-				<td>
+				<td class="right-align">
 					<a href="{link delete $brand->id}" class="ajax">Smazat</a>
 					<a href="{link edit $brand->id}" class="ajax">Editovat</a>
 				</td>
@@ -30,44 +36,27 @@
 		{/foreach}
 		</tbody>
 	</table>
-		<p>Stránka
+	<div class="right-align">
+		<ul class="pagination">Stránka
 			{for $i = $paginator->getFirstPage();  $i<= $paginator->getLastPage() ; $i ++ }
-			    <span>
-					<a href="{link default page: $i}" class="ajax">{if $i===$paginator->getPage()}<b>{/if}{$i}{if $i===$paginator->getPage()}</b>{/if}</a>
-				</span>
+			    <li class="waves-effect {if $i===$paginator->getPage()}active{/if}">
+					<a href="{link default page: $i}" class="ajax btn ">{$i}</a>
+				</li>
 			{/for}
-		</p>
+		</ul>
 		<p>Záznamů na stránku
-			{for $j = 10; $j < 31; $j+=10 }
+			{dump $paginator->getItemsPerPage()}
+			{for $j = 10; $j <= 31; $j+=10 }
 				<span>
-					<a href="{link default items: $j}" class="ajax">{$j}</a>
+					<a href="{link default items: $j}" class="ajax btn waves-effect  {if $j===$paginator->getItemsPerPage()}active{/if}">{$j}</a>
 				</span>
 			{/for}
 		</p>
+	</div>
 	{/snippet}
 
 	{snippet modal}
 
 	{/snippet}
-</div>
-
-<style>
-	html { font: normal 18px/1.3 Georgia, "New York CE", utopia, serif; color: #666; -webkit-text-stroke: 1px rgba(0,0,0,0); overflow-y: scroll; }
-	body { background: #3484d2; color: #333; margin: 2em auto; padding: 0 .5em; max-width: 600px; min-width: 320px; }
-
-	a { color: #006aeb; padding: 3px 1px; }
-	a:hover, a:active, a:focus { background-color: #006aeb; text-decoration: none; color: white; }
-
-	#banner { border-radius: 12px 12px 0 0; background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAB5CAMAAADPursXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAGBQTFRFD1CRDkqFDTlmDkF1D06NDT1tDTNZDk2KEFWaDTZgDkiCDTtpDT5wDkZ/DTBVEFacEFOWD1KUDTRcDTFWDkV9DkR7DkN4DkByDTVeDC9TDThjDTxrDkeADkuIDTRbDC9SbsUaggAAAEdJREFUeNqkwYURgAAQA7DH3d3335LSKyxAYpf9vWCpnYbf01qcOdFVXc14w4BznNTjkQfsscAdU3b4wIh9fDVYc4zV8xZgAAYaCMI6vPgLAAAAAElFTkSuQmCC); }
-
-	h1 { font: inherit; color: white; font-size: 50px; line-height: 121px; margin: 0; padding-left: 4%; background: url(https://files.nette.org/images/logo-nette@2.png) no-repeat 95%; background-size: 130px auto; text-shadow: 1px 1px 0 rgba(0, 0, 0, .9); }
-	@media (max-width: 600px) {
-		h1 { background: none; font-size: 40px; }
-	}
-
-	#content { background: white; border: 1px solid #eff4f7; border-radius: 0 0 12px 12px; padding: 10px 4%; overflow: hidden; }
-
-	h2 { font: inherit; padding: 1.2em 0; margin: 0; }
-
-	img { border: none; float: right; margin: 0 0 1em 3em; }
-</style>
+	</div>
+{/block}
