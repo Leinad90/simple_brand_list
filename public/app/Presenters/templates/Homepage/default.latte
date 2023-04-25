@@ -45,7 +45,6 @@
 			{/for}
 		</ul>
 		<p>Záznamů na stránku
-			{dump $paginator->getItemsPerPage()}
 			{for $j = 10; $j <= 31; $j+=10 }
 				<span>
 					<a href="{link default items: $j}" class="ajax btn waves-effect  {if $j===$paginator->getItemsPerPage()}active{/if}">{$j}</a>
