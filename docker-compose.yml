@@ -9,6 +9,7 @@ services:
     ports:
       - "80:80"
     depends_on:
+      - node
       - sass
       - db
       - composer
@@ -51,3 +52,4 @@ services:
       MYSQL_PASSWORD: RpipYboYanEY
     volumes:
       - ./database:/var/lib/mysql
+      - ./db_create:/docker-entrypoint-initdb.d/
