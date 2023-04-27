@@ -1,16 +1,11 @@
-{snippet modal}
-    <div style="position: fixed; top: 0; z-index: 1; height: 100%" class="container light-green darken-3">
+
+{snippet modalContent}
     <div>
-        <h2>{ifset $data}Editace značky {$data['name']}{else}Nová značka{/ifset}
-        <a class="btn ajax red right" href="{plink default}">&#10005;</a>
-        </h2>
-
-    </div>
-        <div>
         {control form}
-        </div>
     </div>
+    <script>
+        alert('a');
+        element = document.querySelector('.modal');
+        element.style.display = 'block';
+    </script>
 {/snippet}
-<script>
-
-</script>

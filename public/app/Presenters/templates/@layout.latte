@@ -40,5 +40,17 @@
 
 	{/block}
 </div>
+	{snippet modal}
+	<div class="modal" id="modal">
+		<div>
+			<h2>
+				<a class="btn ajax red right modal-close" href="{plink default}">&#10005;</a>
+			</h2>
+		</div>
+		{snippet modalContent}
+			Vyskakovací okno
+		{/snippet}
+	</div>
+{/snippet}
 </body>
 </html>

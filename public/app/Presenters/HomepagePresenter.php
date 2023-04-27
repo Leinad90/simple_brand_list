@@ -62,7 +62,7 @@ final class HomepagePresenter extends Nette\Application\UI\Presenter
             $this->template->data = $data = $this->brand->getById($id);
             $this['form']->setDefaults($data);
         }
-        $this->redrawControl('modal');
+        $this->redrawControl();
     }
 
     public function actionDelete(int $id): never
