@@ -60,6 +60,9 @@ final class HomepagePresenter extends Nette\Application\UI\Presenter
         if($id)
         {
             $this->template->data = $data = $this->brand->getById($id);
+            if($data===null) {
+                $this->error('Značka nenalezena');
+            }
             $this['form']->setDefaults($data);
         }
         $this->redrawControl();
